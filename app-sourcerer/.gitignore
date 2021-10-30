@@ -48,5 +48,9 @@ Thumbs.db
 .browserslistrc
 .editorconfig
 karma.conf.js
+<<<<<<< HEAD
 /app-sourcerer/src/environments/
 app-sourcerer/src/header/model.ts
+=======
+/app-sourcerer/src/environments/
+>>>>>>> 27a58cfd441659e9bdd72803f00b9a55d61d3b4c
