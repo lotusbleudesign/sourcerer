@@ -1,39 +1,39 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { ExchangeRates } from './exchange-rates/exchange-rates.component';
+import { HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { HeaderComponent } from './header/header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './header/material/material.module';
 
+const token = environment.api_key
+const uri = environment.uri
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    GraphQLModule,
-    HttpClientModule
+  imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule, MaterialModule,
   ],
   providers: [
     {
       provide: APOLLO_OPTIONS,
       useFactory: (httpLink: HttpLink) => {
         return {
-          cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://48p1r2roz4.sse.codesandbox.io',
+            uri, headers: new HttpHeaders()
+              .set('authorization', `Bearer ${token}`)
           }),
+          cache: new InMemoryCache(),
         };
       },
       deps: [HttpLink],
     },
   ],
+  declarations: [AppComponent, ExchangeRates, HeaderComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,31 @@
+.header {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 15em;
+}
+.body {
+  padding: 50px;
+}
+.round-header-image {
+  background-size: cover;
+  margin: 10px;
+}
+.example-card {
+  max-width: 100px;
+}
+.centerMe {
+  background-color: #d8dfe3;
+}
+table {
+  table-layout: fixed;
+  width: 100%;
+  margin: 15px;
+  align-items: center;
+  border-spacing: 5px;
+  table-layout: fixed;
+  /* border: 1px solid blue; */
+  text-align: center;
+  vertical-align: center;
+  align-items: center;
+}

@@ -3,9 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-};
-
+  production: false,
+  api_key: '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',
+  uri: 'https://api.github.com/graphql' // <-- add the URL of the GraphQL server here};
+}
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

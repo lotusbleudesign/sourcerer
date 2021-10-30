@@ -1,0 +1,31 @@
+<div class="body">
+  <h1>{{viewer?.name}}</h1>
+  <mat-card>
+    <div mat-card-avatar class="round-header-image" style="background-image:url('{{viewer?.avatarUrl}}')">
+    </div>
+    <mat-card-title>
+      {{viewer?.login}}
+    </mat-card-title>
+    <mat-card-subtitle>{{viewer?.bio}}</mat-card-subtitle>
+    <mat-card-content>
+      <table>
+        <tr>
+          <td class="centerMe">commits : {{viewer?.totalCommitCount }}</td>
+          <td>Repos : {{viewer?.repositories?.totalCount}}</td>
+          <td class="centerMe">Lines of code : </td>
+          <td>Followers : {{viewer?.followers?.totalCount}}
+            <i class="fa-solid fa-code-merge"></i>
+          </td>
+          <td class="centerMe">Following : {{viewer?.following?.totalCount}}</td>
+        </tr>
+      </table>
+    </mat-card-content>
+    <mat-card-content>
+      <ul>
+        <li *ngFor="let toto of viewer?.repositories?.edges">
+          {{ toto?.node?.name }}
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>
