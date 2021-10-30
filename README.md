@@ -1,9 +1,9 @@
-## sourcerer
+# sourcerer
 
 TP on GraphQL: <br>
 This project is about visual profile for software engineer as sourcerer
 
-# AppSourcerer
+## AppSourcerer
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.11.
 
@@ -13,11 +13,11 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Requirement
 
-# Cloc
+### Cloc
 
 CLOC for counting lines <br>
 npm install -g cloc
 
-# Graph
+### Graph
 
 ...
