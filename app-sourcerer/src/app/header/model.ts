@@ -97,32 +97,6 @@ utilisée afin de copier les valeurs de toutes les propriétés directes (non h�
 */
 
 
-//langage et couleur par repo , date update, date création, description,
-/*
-{
-  viewer {
-    login
-    createdAt
-    updatedAt
-    repositories(first: 50) {
-      nodes {
-        name
-        languages(last: 10) {
-          nodes {
-            name
-            color
-          }
-          totalSize
-        }
-        description
-      }
-      totalCount
-    }
-  }
-}
-
-*/
-
 // refs(refPrefix: "refs/heads/") {
 //   edges {
 //     node {
@@ -151,3 +125,37 @@ utilisée afin de copier les valeurs de toutes les propriétés directes (non h�
   //   }
   // }
 // }
+
+// ######### RECENT 
+//langage et couleur par repo , date update, date création, description, nombre de commit
+/*
+{
+  viewer {
+    login
+    createdAt
+    updatedAt
+    repositories(first: 50) {
+      nodes {
+        name
+        object(expression: "main") {
+          ... on Commit {
+            history {
+              totalCount
+            }
+          }
+        }
+        languages(last: 10) {
+          nodes {
+            name
+            color
+          }
+          totalSize
+        }
+        description
+      }
+      totalCount
+    }
+  }
+}
+
+*/

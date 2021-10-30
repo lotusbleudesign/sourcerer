@@ -1,10 +1,12 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
+// 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
+// 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
 export const environment = {
   production: false,
-  api_key: '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',
+  api_key: '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',
+
   uri: 'https://api.github.com/graphql' // <-- add the URL of the GraphQL server here};
 }
 /*

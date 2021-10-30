@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 
-
 // Mettre ici touts les composantes material utilisés
 const MaterialComponents = [
   MatButtonModule,

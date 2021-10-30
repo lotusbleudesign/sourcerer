@@ -5,12 +5,11 @@ import { InMemoryCache } from '@apollo/client/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { ExchangeRates } from './exchange-rates/exchange-rates.component';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './header/material/material.module';
+import { MaterialModule } from './material/material.module';
 
 const token = environment.api_key
 const uri = environment.uri
@@ -33,7 +32,7 @@ const uri = environment.uri
       deps: [HttpLink],
     },
   ],
-  declarations: [AppComponent, ExchangeRates, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
