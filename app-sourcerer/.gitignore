@@ -48,3 +48,4 @@ Thumbs.db
 .browserslistrc
 .editorconfig
 karma.conf.js
+app-sourcerer/src/environments/
