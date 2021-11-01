@@ -75,56 +75,65 @@ utilisée afin de copier les valeurs de toutes les propriétés directes (non h�
     }
   }
 }
-*/
 
-/*
-{
-  viewer {
-    login
-    repositories(first:50){
-      nodes{
-        name
-        primaryLanguage{
-          name
-          color
-        }
-      }
-      totalCount
-    }
-  }
-}
-
+.repositories?.edges?.node?.name?.refs?.edges?.node?.name;
 */
 
 
-// refs(refPrefix: "refs/heads/") {
-//   edges {
-//     node {
-//       target {
-//         ... on Commit {
-//           history(first: 0) {
-//             totalCount
+
+
+
+// {
+//   repository(owner: "facebook", name: "react") {
+//   object(expression: "master") {
+//     ... on Commit {
+//       history {
+//         nodes {
+//           committedDate
+//         }
+
+//       }
+//     }
+//   }
+// }
+// }
+
+//
+
+
+// TEST SUR LE REPO
+// {
+//   repository(owner: "lotusbleudesign", name: "J2EE-JPA") {
+//     refs(refPrefix: "refs/heads/", orderBy: { direction: DESC, field: TAG_COMMIT_DATE }, first: 100) {
+//       edges {
+//         node {
+//           ... on Ref {
+//             name
+//             target {
+//               ... on Commit {
+//                 history(first: 0) {
+//                   totalCount
+//                 }
+//               }
+//             }
 //           }
+//         }
+//       }
+//       totalCount
+//     }
+//     languages(first: 10) {
+//       edges {
+//         size
+//         node {
+//           name
+//           color
 //         }
 //       }
 //     }
 //   }
 // }
 
-// {
-//   repository(owner: "facebook", name: "react") {
-  //   object(expression: "master") {
-  //     ... on Commit {
-  //       history {
-  //         nodes {
-  //           committedDate
-  //         }
-
-  //       }
-  //     }
-  //   }
-  // }
-// }
+//name: "J2EE-JPA"
 
 // ######### RECENT 
 //langage et couleur par repo , date update, date création, description, nombre de commit
@@ -137,6 +146,7 @@ utilisée afin de copier les valeurs de toutes les propriétés directes (non h�
     repositories(first: 50) {
       nodes {
         name
+        description
         object(expression: "main") {
           ... on Commit {
             history {
@@ -144,18 +154,80 @@ utilisée afin de copier les valeurs de toutes les propriétés directes (non h�
             }
           }
         }
-        languages(last: 10) {
-          nodes {
-            name
-            color
+        languages(last: 50) {
+          edges {
+            node {
+              name
+              color
+            }
+            size
           }
-          totalSize
         }
-        description
+
       }
       totalCount
     }
   }
 }
 
-*/
+// */
+// {
+//   viewer {
+//     login
+//     name
+//     avatarUrl
+//     followers(first: 10) {
+//       totalCount
+//     }
+//     following(first: 10) {
+//       totalCount
+//     }
+//     repositories(last: 50) {
+//       nodes {
+//         name
+//         languages(last: 20) {
+//           nodes {
+//             name
+//             color
+//           }
+//           totalCount
+//           totalSize
+//         }
+//       }
+//       edges {
+//         node {
+//           name
+//           refs(first: 10, refPrefix: "refs/heads/") {
+//             edges {
+//               node {
+//                 ...branch
+//               }
+//             }
+//           }
+//         }
+//       }
+//       totalCount
+//     }
+//   }
+// }
+
+// fragment branch on Ref {
+//   name
+//   target {
+//     ... on Commit {
+//       history(first: 0) {
+//         totalCount
+//       }
+//     }
+//   }
+// }
+
+// <!-- < ul >
+//   <li * ngFor="let item of viewer?.repositories?.edges" >
+//     <ul>
+//     <li * ngFor="let subItem of item?.node?.refs?.edges" >
+//       & nbsp;& nbsp; { { subItem?.node?.target?.history?.totalCount } }
+// </li>
+//   < /ul>
+//   < /li>
+//   < /ul> -->

@@ -10,12 +10,19 @@ import { environment } from 'src/environments/environment';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-const token = environment.api_key
-const uri = environment.uri
+const token = environment.api_key;
+const uri = environment.uri;
 
 @NgModule({
-  imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule, MaterialModule,
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {
@@ -23,8 +30,8 @@ const uri = environment.uri
       useFactory: (httpLink: HttpLink) => {
         return {
           link: httpLink.create({
-            uri, headers: new HttpHeaders()
-              .set('authorization', `Bearer ${token}`)
+            uri,
+            headers: new HttpHeaders().set('authorization', `Bearer ${token}`),
           }),
           cache: new InMemoryCache(),
         };
@@ -33,6 +40,6 @@ const uri = environment.uri
     },
   ],
   declarations: [AppComponent, HeaderComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

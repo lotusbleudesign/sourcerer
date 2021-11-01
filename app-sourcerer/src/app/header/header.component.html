@@ -3,10 +3,8 @@
   <mat-card>
     <div mat-card-avatar class="round-header-image" style="background-image:url('{{viewer?.avatarUrl}}')">
     </div>
-    <mat-card-title>
-      {{viewer?.login}}
-    </mat-card-title>
-    <mat-card-subtitle>{{viewer?.bio}}</mat-card-subtitle>
+    <mat-card-subtitle> {{viewer?.login}}</mat-card-subtitle>
+    <mat-card-subtitle>{{ viewer?.bio }}</mat-card-subtitle>
     <mat-card-content>
       <table>
         <tr>
@@ -20,13 +18,20 @@
         </tr>
       </table>
     </mat-card-content>
+  </mat-card>
+  <br>
+  <mat-card>
     <mat-card-content>
-      <ul>
-        <li *ngFor="let toto of viewer?.repositories?.edges">
-          {{ toto?.node?.name }}
-        </li>
-      </ul>
-
+      <div *ngFor="let item of viewer?.repositories?.nodes">
+        {{ item?.name}}
+      </div>
     </mat-card-content>
   </mat-card>
+  <br>
+  <div>
+    <ngx-charts-area-chart-stacked [view]="[1000,400]" [results]="data" [xAxisLabel]="'Products'"
+      [legendTitle]="'Product Sale Chart'" [yAxisLabel]="'Sale'" [legend]="true" [showXAxisLabel]="true"
+      [showYAxisLabel]="true" [xAxis]="true" [yAxis]="false" [gradient]="false" (select)="onSelect($event)">
+    </ngx-charts-area-chart-stacked>
+  </div>
 </div>
