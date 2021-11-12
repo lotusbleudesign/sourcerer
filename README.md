@@ -11,12 +11,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Requirement
+## API KEY
 
-### Cloc
-
-CLOC for counting lines <br>
-npm install -g cloc
+Api_key in dir environments/environment.ts
 
 ### Graph
 
