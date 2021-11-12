@@ -1,0 +1,39 @@
+<div class="body">
+  <mat-card style="background-color: #F0F4F1">
+    <mat-card-content>
+      <div>
+        <table>
+          <tr>
+            <td>
+              <h1>Languages</h1>
+            </td>
+            <td>
+          <tr>
+            <td>
+              {{viewer?.repositories?.totalCount}} repos
+            </td>
+          </tr>
+          <tr>
+            <td>
+              last update : {{ viewer?.updateDate | date: 'dd/MM/yyyy - hh:mm:ss a' }}
+            </td>
+          </tr>
+          </td>
+          </tr>
+        </table>
+      </div>
+      <mat-card-content *ngFor="let item of viewer?.repositories?.nodes">
+        <ul>
+          <li>
+            <b>{{ item?.primaryLanguage?.name }} <span class="dot"
+                [ngStyle]="{'background-color':item?.primaryLanguage?.color}"></span>
+            </b>
+          </li>
+          <li> commits : {{ item?.nbCommitPerRepo}}</li>
+          <li>LOC : {{ item?.nbCodeLinesPerRepo}}</li>
+        </ul>
+      </mat-card-content>
+    </mat-card-content>
+  </mat-card>
+</div>
+<br>

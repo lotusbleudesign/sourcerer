@@ -1,37 +1,38 @@
 <div class="body">
-  <h1>{{viewer?.name}}</h1>
-  <mat-card>
-    <div mat-card-avatar class="round-header-image" style="background-image:url('{{viewer?.avatarUrl}}')">
-    </div>
-    <mat-card-subtitle> {{viewer?.login}}</mat-card-subtitle>
-    <mat-card-subtitle>{{ viewer?.bio }}</mat-card-subtitle>
+  <mat-card style="background-color: #F0F4F1">
+    <table>
+      <tr>
+        <td class="gauche">
+          <h1>{{viewer?.name}}</h1>
+        </td>
+        <td>
+          <mat-card-subtitle>
+            {{ viewer?.bio }}
+          </mat-card-subtitle>
+        </td>
+      </tr>
+    </table>
     <mat-card-content>
-      <table>
-        <tr>
-          <td class="centerMe">commits : {{viewer?.totalCommitCount }}</td>
-          <td>Repos : {{viewer?.repositories?.totalCount}}</td>
-          <td class="centerMe">Lines of code : </td>
-          <td>Followers : {{viewer?.followers?.totalCount}}
-            <i class="fa-solid fa-code-merge"></i>
-          </td>
-          <td class="centerMe">Following : {{viewer?.following?.totalCount}}</td>
-        </tr>
-      </table>
+
+      <img *ngIf="!viewer; else hasViewer" src="assets/loader.svg"
+        style="  display:block;margin-left:auto;margin-right:auto;">
+      <ng-template #hasViewer>
+        <img src="{{viewer?.avatarUrl}}" width="100" class="image">
+        <mat-card-subtitle> {{viewer?.login}}</mat-card-subtitle>
+        <table>
+          <tr class="centerMe">
+            <td>commits : {{viewer?.totalCommitCount }}</td>
+            <td>Repos : {{viewer?.repositories?.totalCount}}</td>
+            <td>Lines of code : {{viewer?.totalCodeLinesCount}}</td>
+            <td>Followers : {{viewer?.followers?.totalCount}}
+              <i class="fa fa-code-merge"></i>
+            </td>
+            <td>Following : {{viewer?.following?.totalCount}}</td>
+          </tr>
+        </table>
+      </ng-template>
+
     </mat-card-content>
   </mat-card>
   <br>
-  <mat-card>
-    <mat-card-content>
-      <div *ngFor="let item of viewer?.repositories?.nodes">
-        {{ item?.name}}
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <br>
-  <div>
-    <ngx-charts-area-chart-stacked [view]="[1000,400]" [results]="data" [xAxisLabel]="'Products'"
-      [legendTitle]="'Product Sale Chart'" [yAxisLabel]="'Sale'" [legend]="true" [showXAxisLabel]="true"
-      [showYAxisLabel]="true" [xAxis]="true" [yAxis]="false" [gradient]="false" (select)="onSelect($event)">
-    </ngx-charts-area-chart-stacked>
-  </div>
 </div>

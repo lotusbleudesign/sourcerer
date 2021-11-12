@@ -11,6 +11,12 @@ utilisée afin de copier les valeurs de toutes les propriétés directes (non h�
 */
 
 /*
+query {
+ user(login: "lotusbleudesign") {
+   name
+  login
+ }
+}
 
 {
   repository(owner: "lotusbleudesign", name: "learn.graphql") {
@@ -76,7 +82,6 @@ utilisée afin de copier les valeurs de toutes les propriétés directes (non h�
   }
 }
 
-.repositories?.edges?.node?.name?.refs?.edges?.node?.name;
 */
 
 
@@ -231,3 +236,101 @@ utilisée afin de copier les valeurs de toutes les propriétés directes (non h�
 //   < /ul>
 //   < /li>
 //   < /ul> -->
+
+
+// FINAL 
+{
+  user(login: "lotusbleudesign") {
+    login
+    bio
+    name
+    avatarUrl
+    location
+    followers(first: 50) {
+      totalCount
+    }
+    following(first: 50) {
+      totalCount
+    }
+    repositories(first: 5) {
+      totalCount
+      nodes {
+        name
+        description
+        createdAt
+        updatedAt
+        primaryLanguage {
+          name
+          color
+        }
+        languages(first: 10) {
+          edges {
+            size
+            node {
+              name
+              color
+            }
+          }
+        }
+        collaborators(affiliation: ALL) {
+          nodes {
+            name
+            login
+            avatarUrl
+          }
+        }
+        refs(first: 40, refPrefix: "refs/heads/") {
+          edges {
+            node {
+              ...branch
+            }
+          }
+          totalCount
+        }
+        object(expression: "HEAD:") {
+          ... on Tree {
+            entries {
+              name
+              type
+              object {
+                ... on Blob {
+                  byteSize
+                  text
+                }
+                ... on Tree {
+                  entries {
+                    name
+                    type
+                    object {
+                      ... on Blob {
+                        byteSize
+                        text
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment branch on Ref {
+  name
+  target {
+    ... on Commit {
+      history(first: 0) {
+        totalCount
+      }
+    }
+  }
+}
+
+
+// count git ls-files | xargs cat | wc -l
+
+https://api.github.com/repos/lotusbleudesign/<repo_name/commits?page=0&per_page=30
+// curl - H "Authorization: bearer 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" https://api.github.com/graphql

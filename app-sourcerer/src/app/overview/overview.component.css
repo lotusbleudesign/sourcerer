@@ -1,0 +1,29 @@
+.body {
+  padding-left: 90px;
+  padding-right: 90px;
+}
+.chart {
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: visible !important;
+  align-items: center;
+}
+.overview {
+  background-color: #e2eae4;
+}
+
+table {
+  width: 100%;
+  vertical-align: center;
+}
+td {
+  width: 50%;
+}
+h1 {
+  color: #555555;
+}
+
+html {
+  font-family: Roboto Mono, Verdana;
+  size: 13px;
+}

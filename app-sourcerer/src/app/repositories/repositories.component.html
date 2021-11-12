@@ -1,0 +1,69 @@
+<div class="body">
+  <mat-card style="background-color: #F0F4F1">
+    <mat-card-content>
+      <table>
+        <tr>
+          <td align="left">
+            <h1>Repositories</h1>
+          </td>
+          <td>
+        <tr>
+          <td align="left">
+            {{viewer?.repositories?.totalCount}} repos
+          </td>
+        </tr>
+        <tr>
+          <td align="left">
+            last updated: {{viewer?.updateDate | date:'dd/MM/yyyy - hh:mm:ss a'}}
+          </td>
+        </tr>
+        </td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td align="left"># Repository</td>
+          <td>Commits</td>
+          <td>Team</td>
+          <td>Language</td>
+        </tr>
+      </table>
+      <mat-accordion *ngFor="let item of viewer?.repositories?.nodes">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <table>
+                <tr>
+                  <td align="left">
+                    <i class='fab fa-github fa-lg'>&nbsp;</i> {{ item?.name}} <br>{{ item?.description}}
+                  </td>
+                  <td> {{ item?.nbCommitPerRepo }}</td>
+                  <td>{{item?.collaborators?.totalCount}}</td>
+                  <td>
+                    {{ item?.primaryLanguage?.name }}
+                    <span class="dot" [ngStyle]="{'background-color':item?.primaryLanguage?.color}"></span>
+                  </td>
+                </tr>
+              </table>
+            </mat-panel-title>
+
+          </mat-expansion-panel-header>
+          <ul *ngIf="item?.languages?.edges.length; else noLangage">
+            <li *ngFor=" let language of item?.languages?.edges">
+              <span class=" dot" [ngStyle]="{'background-color':language?.node?.color}"></span>
+              {{ language?.node?.name }}
+            </li>
+          </ul>
+          <ng-template #noLangage>
+            <ul>
+              <i>Unattibuted</i>
+            </ul>
+          </ng-template>
+          <div *ngFor="let collaborator of item?.collaborators?.nodes">
+            <img src="{{ collaborator?.avatarUrl }}" class="image"> {{ collaborator?.login }}
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+  </mat-card>
+  <br>

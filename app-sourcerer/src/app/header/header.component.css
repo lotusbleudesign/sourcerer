@@ -1,21 +1,36 @@
+.body {
+  padding-left: 90px;
+  padding-right: 90px;
+}
+.centerMe {
+  background-color: #e2eae4;
+  height: 50px;
+}
+.example-card {
+  max-width: 100px;
+}
+.example-margin {
+  margin: 0 10px;
+}
 .header {
   margin: 0 0 2em 0;
   list-style-type: none;
   padding: 0;
   width: 15em;
 }
-.body {
-  padding: 50px;
+.image {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  border: solid 1px black;
 }
+.gauche {
+  text-align: left;
+}
+
 .round-header-image {
   background-size: cover;
   margin: 10px;
-}
-.example-card {
-  max-width: 100px;
-}
-.centerMe {
-  background-color: #d8dfe3;
 }
 table {
   table-layout: fixed;
@@ -28,4 +43,13 @@ table {
   text-align: center;
   vertical-align: center;
   align-items: center;
+}
+
+h1 {
+  color: #555555;
+}
+
+html {
+  font-family: Roboto Mono Verdana;
+  size: 13px;
 }

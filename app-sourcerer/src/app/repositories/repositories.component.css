@@ -1,0 +1,33 @@
+.body {
+  padding-left: 90px;
+  padding-right: 90px;
+}
+.mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+.dot {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.image {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: solid 1px black;
+}
+table {
+  table-layout: fixed;
+  width: 100%;
+  margin: 5px;
+  border-spacing: 5px;
+  table-layout: fixed;
+  /* border: 1px solid blue; */
+  text-align: center;
+  vertical-align: center;
+}
+td {
+  width: auto;
+}

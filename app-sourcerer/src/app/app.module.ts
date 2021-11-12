@@ -11,6 +11,9 @@ import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { OverviewComponent } from './overview/overview.component';
+import { RepositoriesComponent } from './repositories/repositories.component';
+import { LanguagesComponent } from './languages/languages.component';
 
 const token = environment.api_key;
 const uri = environment.uri;
@@ -39,7 +42,7 @@ const uri = environment.uri;
       deps: [HttpLink],
     },
   ],
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, OverviewComponent, RepositoriesComponent, LanguagesComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

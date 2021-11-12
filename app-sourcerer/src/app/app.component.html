@@ -1,3 +1,8 @@
 <div>
   <app-header></app-header>
+  <div *ngIf="viewer">
+    <app-overview [viewer]="viewer"></app-overview>
+    <app-repositories [viewer]="viewer"></app-repositories>
+    <app-languages [viewer]="viewer"></app-languages>
+  </div>
 </div>

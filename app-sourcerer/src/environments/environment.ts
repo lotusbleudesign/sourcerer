@@ -5,7 +5,7 @@
 // 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
 export const environment = {
   production: false,
-  api_key: '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',
+  api_key: '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',
 
   uri: 'https://api.github.com/graphql' // <-- add the URL of the GraphQL server here};
 }

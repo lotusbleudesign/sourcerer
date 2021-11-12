@@ -5,17 +5,19 @@ import { MatCardModule } from '@angular/material/card'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatBadgeModule } from '@angular/material/badge';
 
-// Mettre ici touts les composantes material utilisés
 const MaterialComponents = [
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatIconModule
+  MatIconModule,
+  MatExpansionModule,
+  MatBadgeModule
 ]
 
-// uniquement dédié à l'import/export module material
 @NgModule({
   exports: [MaterialComponents],
   imports: [MaterialComponents]

@@ -1,147 +1,123 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  //## ------ CHART 1
-  data: any[] = [
-    {
-      "name": "Germany",
-      "series": [
-        {
-          "name": "1990",
-          "value": 62000000
-        },
-        {
-          "name": "2010",
-          "value": 73000000
-        },
-        {
-          "name": "2011",
-          "value": 89400000
-        }
-      ]
-    },
-
-    {
-      "name": "USA",
-      "series": [
-        {
-          "name": "1990",
-          "value": 250000000
-        },
-        {
-          "name": "2010",
-          "value": 309000000
-        },
-        {
-          "name": "2011",
-          "value": 311000000
-        }
-      ]
-    },
-
-    {
-      "name": "France",
-      "series": [
-        {
-          "name": "1990",
-          "value": 58000000
-        },
-        {
-          "name": "2010",
-          "value": 50000020
-        },
-        {
-          "name": "2011",
-          "value": 58000000
-        }
-      ]
-    },
-    {
-      "name": "UK",
-      "series": [
-        {
-          "name": "1990",
-          "value": 57000000
-        },
-        {
-          "name": "2010",
-          "value": 62000000
-        }
-      ]
-    }
-  ];
-  onSelect(event: any) {
-    console.log(event);
-  }
-  // options
-  legend: boolean = true;
-  showLabels: boolean = true;
-  animations: boolean = true;
-  xAxis: boolean = true;
-  yAxis: boolean = true;
-  showYAxisLabel: boolean = true;
-  showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Year';
-  yAxisLabel: string = 'Population';
-  timeline: boolean = true;
-  colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-  };
-
-  // ----- SCHEMA
   viewer:
     | {
       login: string;
       bio: string;
       name: string;
       avatarUrl: string;
+      location: string;
       followers: { totalCount: number };
       following: { totalCount: number };
       repositories: {
+        totalCount: number;
         nodes: [
           {
-            name: string,
+            name: string;
+            description: string;
+            createdAt: string;
+            updatedAt: Date;
+            primaryLanguage: {
+              name: string;
+              color: string;
+            }
             languages: {
-              nodes: [{ name: string; color: string }];
+              edges: [
+                {
+                  size: number
+                  node: {
+                    name: string,
+                    color: string
+                  }
+                }
+              ]
+            };
+            collaborators: {
+              nodes: [
+                {
+                  name: string;
+                  login: string;
+                  avatarUrl: string;
+                }
+
+              ];
               totalCount: number;
-              totalSize: number;
             };
-          }
-        ];
-        totalCount: number;
-        edges: [{
-          node: {
             refs: {
-              edges: [{
-                node: {
-                  target: { history: { totalCount: number } };
-                };
-              }];
+              edges: [
+                {
+                  node: {
+                    name: string;
+                    target: {
+                      history: {
+                        totalCount: number;
+                      };
+                    };
+                  };
+                }
+              ];
             };
-          };
-        }];
-      };
-
-      totalCommitCount: number;
-
+            object: {
+              entries: [
+                {
+                  name: string;
+                  type: string;
+                  object: {
+                    entries: [
+                      {
+                        name: string;
+                        type: string;
+                        object: {
+                          byteSize: number;
+                          text: string;
+                        };
+                      }
+                    ];
+                  };
+                }
+              ];
+            };
+            nbCommitPerRepo: number
+            nbCodeLinesPerRepo: number
+          }
+        ]
+      }
+      totalCommitCount: number
+      totalCodeLinesCount: number
+      updateDate: Date
+      nameRepo: string
+      chartData: any[]
     }
     | undefined;
-
   loading = true;
   error: any;
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo) { }
 
+  countTreeCodeLines(entries: any) {
+    let nbCodeLines = 0
+
+    for (let item of entries) {
+      if (item?.type === 'tree' && item?.object?.entries) {
+        nbCodeLines += this.countTreeCodeLines(item?.object?.entries)
+      } else {
+        let text = item?.object?.text
+        if (text) {
+          nbCodeLines += (text.match(/\n/g) || []).length // Notation match() : soit on compte le nombre de ligne, soit on retourne un tableau vide
+        }
+      }
+    }
+    return nbCodeLines
   }
 
-  // ---- Hook Cycle
   ngOnInit() {
+
     this.apollo
       .watchQuery({
         query: gql`
@@ -151,32 +127,71 @@ export class HeaderComponent implements OnInit {
               bio
               name
               avatarUrl
+              location
               followers(first: 50) {
                 totalCount
               }
               following(first: 50) {
                 totalCount
               }
-              repositories(last: 50) {
+              repositories(first: 50, isFork:false) {
+                totalCount
                 nodes {
                   name
-                  languages(last: 30) {
+                  description
+                  createdAt
+                  updatedAt
+                  primaryLanguage {
+                    name
+                    color
+                  }
+                  languages(first: 10) {
+                    edges {
+                      size
+                      node {
+                        name
+                        color
+                      }
+                    }
+                  }
+                  collaborators(affiliation: ALL) {
                     nodes {
                       name
-                      color
+                      login
+                      avatarUrl
+                    }
+                  totalCount
+                  }
+                  refs(first: 40, refPrefix: "refs/heads/") {
+                    edges {
+                      node {
+                        ...branch
+                      }
                     }
                     totalCount
-                    totalSize
                   }
-                }
-                totalCount
-                edges {
-                  node {
-                    name
-                    refs(first: 30, refPrefix: "refs/heads/") {
-                      edges {
-                        node {
-                          ...branch
+                  object(expression: "HEAD:") {
+                    ... on Tree {
+                      entries {
+                        name
+                        type
+                        object {
+                          ... on Blob {
+                            byteSize
+                            text
+                          }
+                          ... on Tree {
+                            entries {
+                              name
+                              type
+                              object {
+                                ... on Blob {
+                                  byteSize
+                                  text
+                                }
+                              }
+                            }
+                          }
                         }
                       }
                     }
@@ -185,6 +200,7 @@ export class HeaderComponent implements OnInit {
               }
             }
           }
+
           fragment branch on Ref {
             name
             target {
@@ -202,25 +218,58 @@ export class HeaderComponent implements OnInit {
         this.error = result.error;
         this.viewer = result?.data?.viewer;
 
+        // On clone la reponse qui est un objet non extensible de façon à pouvoir completer les données
+        this.viewer = JSON.parse(JSON.stringify(this.viewer))
 
-        // --- totalCommitCount
-        // ? permet de spécifier qu'il peut être nul, sinon erreur
-        let totalCommitCount = 0;
-        let repos = this.viewer?.repositories?.edges;
+        let nodes = this.viewer?.repositories?.nodes
 
-        // On décompte le nombre total de commit à partir de repository (si present)
-        if (repos) {
-          for (let item of repos) {
-            for (let subItem of item?.node?.refs?.edges) {
-              totalCommitCount += subItem?.node?.target?.history?.totalCount
+        if (!this.viewer || !nodes) {
+          return
+        }
+        this.viewer.totalCommitCount = 0
+        this.viewer.totalCodeLinesCount = 0
+        this.viewer.chartData = []
+        let chartDataTmp: any = {}
+
+        for (let node of nodes) {
+          // On décompte le nombre total de commit à partir de repository (si present)
+          if (node) {
+            this.viewer.updateDate = node?.updatedAt
+            node.nbCommitPerRepo = 0
+
+            for (let item of node?.refs?.edges) {
+              node.nbCommitPerRepo += item?.node?.target?.history?.totalCount
+            }
+            this.viewer.totalCommitCount += node.nbCommitPerRepo;
+
+            node.nbCodeLinesPerRepo = 0
+            if (node?.object?.entries) {
+              node.nbCodeLinesPerRepo = this.countTreeCodeLines(node?.object?.entries)
+            }
+            this.viewer.totalCodeLinesCount += node.nbCodeLinesPerRepo
+
+            for (let lang of node?.languages?.edges) {
+
+              if (!chartDataTmp[lang.node.name]) {
+                chartDataTmp[lang.node.name] = []
+              }
+
+              chartDataTmp[lang.node.name].push(
+                {
+                  name: node.createdAt,
+                  value: lang.size
+                }
+              )
+
+            }
+            for (let langName in chartDataTmp) {
+              this.viewer.chartData.push({
+                name: langName,
+                series: chartDataTmp[langName]
+              })
             }
           }
         }
-        // On fusionne un un object contenant totalCommitCount avec this.viewer (result?.data?.viewer qui de base non modifiable)
-        this.viewer = Object.assign(
-          { totalCommitCount: totalCommitCount },
-          this.viewer
-        );
       });
   }
 }
